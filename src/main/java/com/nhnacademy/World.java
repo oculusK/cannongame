@@ -2,7 +2,6 @@ package com.nhnacademy;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -13,6 +12,7 @@ import org.apache.logging.log4j.Logger;
 
 public class World extends JPanel {
     List<Ball> ballList = new LinkedList<>();
+    List<Box> boxList = new LinkedList<>();
     Logger logger = LogManager.getLogger();
 
     public World() {
@@ -46,6 +46,33 @@ public class World extends JPanel {
         }
     }
 
+    public void add(Box newBox) {
+        if (newBox == null) {
+            throw new IllegalArgumentException();
+        }
+
+        for (Box box : boxList) {
+            if (newBox.isCollision(box)) {
+                throw new IllegalArgumentException();
+            }
+        }
+        if ((newBox.getRegion().getMinX() < 0)
+                || (getWidth() < newBox.getRegion().getMaxX())
+                || (newBox.getRegion().getMinY() < 0)
+                || (getHeight() < newBox.getRegion().getMaxY())) {
+            throw new IllegalArgumentException("추가하려는 newBox가 world를 벗어납니다.");
+        }
+
+        boxList.add(newBox);
+        if (newBox instanceof PaintableBox) {
+            logger.trace(String.format("newbox 추가 : %s, %d, %d, %s",
+                    ((PaintableBox) newBox).getLocation().toString(),
+                    ((PaintableBox) newBox).getWidth(),
+                    ((PaintableBox) newBox).getHeight(),
+                    ((PaintableBox) newBox).getColor().toString()));
+        }
+    }
+
     public void remove(Ball ball) {
         if (ball == null) {
             throw new IllegalArgumentException();
@@ -54,16 +81,35 @@ public class World extends JPanel {
         ballList.remove(ball);
     }
 
-    @Override
-    public void remove(int index) {
+    public void remove(Box box) {
+        if (box == null) {
+            throw new IllegalArgumentException();
+        }
+
+        boxList.remove(box);
+    }
+
+    public void removeBall(int index) {
         ballList.remove(index);
     }
 
-    public Ball get(int index) {
+    public void removeBox(int index) {
+        boxList.remove(index);
+    }
+
+    public Box getBox(int index) {
+        return boxList.get(index);
+    }
+
+    public Ball getBall(int index) {
         return ballList.get(index);
     }
 
-    public int getCount() {
+    public int getCountBall() {
+        return ballList.size();
+    }
+
+    public int getCountBox() {
         return ballList.size();
     }
 
@@ -76,21 +122,27 @@ public class World extends JPanel {
             }
         }
 
-        Color previousColor = g.getColor();
-        g.setColor(Color.RED);
-        for (int i = 0; i < getCount(); i++) {
-            Ball ball1 = get(i);
-            for (int j = i + 1; j < getCount(); j++) {
-                Ball ball2 = get(j);
-
-                if (ball1.isCollision(ball2)) {
-                    Rectangle collisionArea = ball1.getRegion().intersection(ball2.getRegion());
-
-                    g.drawRect((int) collisionArea.getX(), (int) collisionArea.getY(),
-                            (int) collisionArea.getWidth(), (int) collisionArea.getHeight());
-                }
+        for (Box box : boxList) {
+            if (box instanceof PaintableBox) {
+                ((PaintableBox) box).paint(g);
             }
         }
+
+        Color previousColor = g.getColor();
+        g.setColor(Color.RED);
+        // for (int i = 0; i < getCount(); i++) {
+        // Ball ball1 = get(i);
+        // for (int j = i + 1; j < getCount(); j++) {
+        // Ball ball2 = get(j);
+
+        // if (ball1.isCollision(ball2)) {
+        // Rectangle collisionArea = ball1.getRegion().intersection(ball2.getRegion());
+
+        // g.drawRect((int) collisionArea.getX(), (int) collisionArea.getY(),
+        // (int) collisionArea.getWidth(), (int) collisionArea.getHeight());
+        // }
+        // }
+        // }
         g.setColor(previousColor);
     }
 }

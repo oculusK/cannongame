@@ -12,11 +12,11 @@ public class TestBall2 {
             final int radius = random.nextInt() * (random.nextInt(2) == 0 ? 1 : -1);
 
             try {
-                Ball ball = new Ball(x, y, radius);
+                Ball ball = new Ball(new Point(x, y), radius);
 
                 System.out.println("X : " + x + ", Y : " + y + ", R : " + radius);
 
-                if (ball.getX() != x) {
+                if (ball.point.getX() != x) {
                     System.out.println("Ball의 x좌표가 다릅니다.");
                     System.exit(1);
                 }

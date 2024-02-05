@@ -2,12 +2,12 @@ package com.nhnacademy;
 
 import java.awt.Rectangle;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+// import org.apache.logging.log4j.LogManager;
+// import org.apache.logging.log4j.Logger;
 
 public class Box {
     Rectangle region;
-    Logger logger;
+    // Logger logger;
 
     public Box(Point location, int width, int height) {
         if ((width <= 0 || height <= 0)
@@ -18,8 +18,9 @@ public class Box {
             throw new IllegalArgumentException();
         }
 
-        region = new Rectangle(location.getX() - width / 2, location.getY() - height / 2, width, height);
-        this.logger = LogManager.getLogger(this.getClass());
+        region = new Rectangle(location.getX() - width / 2, location.getY() - height
+                / 2, width, height);
+        // this.logger = LogManager.getLogger(this.getClass());
     }
 
     Point getLocation() {
