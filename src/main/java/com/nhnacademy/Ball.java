@@ -9,8 +9,7 @@ import org.apache.logging.log4j.Logger;
 public class Ball {
     String id = UUID.randomUUID().toString();
     String name = id;
-    Point location;
-    int radius;
+    Rectangle region;
     Logger logger;
 
     public Ball(Point location, int radius) {
@@ -22,8 +21,7 @@ public class Ball {
             throw new IllegalArgumentException();
         }
 
-        this.location = new Point(location);
-        this.radius = radius;
+        region = new Rectangle(location.getX() - radius, location.getY() - radius, radius * 2, radius * 2);
         this.logger = LogManager.getLogger(this.getClass());
     }
 
@@ -40,15 +38,15 @@ public class Ball {
     }
 
     public Point getLocation() {
-        return location;
+        return new Point((int) region.getCenterX(), (int) region.getCenterY());
     }
 
     void setLocation(Point location) {
-        this.location.moveTo(location);
+        region.translate(location.getX() - getLocation().getX(), location.getY() - getLocation().getY());
     }
 
     public int getRadius() {
-        return radius;
+        return (int) (region.getWidth() / 2);
     }
 
     public Rectangle getRegion() {
