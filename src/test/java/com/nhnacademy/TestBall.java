@@ -18,8 +18,8 @@ class TestBall {
 
         Ball ball = new Ball(new Point(x, y), radius);
 
-        assertEquals(x, ball.getX());
-        assertEquals(y, ball.getY());
+        assertEquals(x, ball.region.getX());
+        assertEquals(y, ball.region.getY());
         assertEquals(radius, ball.getRadius());
     }
 
@@ -30,10 +30,10 @@ class TestBall {
         final int y = random.nextInt();
         final int radius = random.nextInt(Integer.MAX_VALUE);
 
-        Ball ball = new Ball(x, y, radius);
+        Ball ball = new Ball(new Point(x, y), radius);
 
-        assertEquals(x, ball.getX());
-        assertEquals(y, ball.getY());
+        assertEquals(x, ball.region.getX());
+        assertEquals(y, ball.region.getY());
         assertEquals(radius, ball.getRadius());
     }
 
@@ -44,7 +44,7 @@ class TestBall {
         final int radius = -30;
 
         assertThrowsExactly(IllegalArgumentException.class, () -> {
-            new Ball(x, y, radius);
+            new Ball(new Point(x, y), radius);
         });
     }
 }

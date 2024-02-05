@@ -52,4 +52,9 @@ public class Point {
     public String toString() {
         return "[" + x + ", " + y + "]";
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return (other instanceof Point) && (getX() == ((Point) other).getX()) && (getY() == ((Point) other).getY());
+    }
 }

@@ -3,10 +3,12 @@ package com.nhnacademy;
 import java.awt.Color;
 
 public class MovableBall extends PaintableBall {
-    public static final int DEFALUT_DX = 0;
-    public static final int DEFALUT_DY = 0;
-    int dx = DEFALUT_DX;
-    int dy = DEFALUT_DY;
+    // public static final int DEFALUT_DX = 0;
+    // public static final int DEFALUT_DY = 0;
+    // int dx = DEFALUT_DX;
+    // int dy = DEFALUT_DY;
+
+    Motion motion = new Motion(getDX(), getDY());
 
     public MovableBall(Point location, int radius) {
         super(location, radius);
@@ -17,19 +19,19 @@ public class MovableBall extends PaintableBall {
     }
 
     public int getDX() {
-        return dx;
+        return motion.dx;
     }
 
     public int getDY() {
-        return dy;
+        return motion.dy;
     }
 
     public void setDX(int dx) {
-        this.dx = dx;
+        motion.dx = dx;
     }
 
     public void setDY(int dy) {
-        this.dy = dy;
+        motion.dy = dy;
     }
 
     public void move() {
