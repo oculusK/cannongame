@@ -17,8 +17,8 @@ public class TestWorld {
 
         frame.add(world);
 
-        Ball ball = new Ball(100, 50);
-        PaintableBall paintableBall = new PaintableBall(200, 50, Color.BLUE);
+        Ball ball = new Ball(new Point(100), 50);
+        PaintableBall paintableBall = new PaintableBall(100, 50, Color.BLUE);
         MovableBall movableBall = new MovableBall(150, 50);
 
         world.add(ball);

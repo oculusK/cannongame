@@ -26,7 +26,7 @@ public class TestMovableWorld3 {
             int x = radius + random.nextInt(400 - 2 * radius);
             int y = radius + random.nextInt(300 - 2 * radius);
 
-            MovableBall movableBall = new MovableBall(x, y, radius, Color.GREEN);
+            MovableBall movableBall = new MovableBall(new Point(x, y), radius, Color.GREEN);
             movableBall.setDX(10);
             movableBall.setDY(5);
             try {
@@ -41,7 +41,7 @@ public class TestMovableWorld3 {
             int x = radius + random.nextInt(400 - 2 * radius);
             int y = radius + random.nextInt(300 - 2 * radius);
 
-            PaintableBall movableBall = new PaintableBall(x, y, radius, Color.GREEN);
+            PaintableBall movableBall = new PaintableBall(new Point(x, y), radius, Color.GREEN);
             try {
                 world.add(movableBall);
             } catch (IllegalArgumentException e) {

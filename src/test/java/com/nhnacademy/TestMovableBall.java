@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 class TestMovableBall {
     @Test
     void testConstructor() {
-        MovableBall movableBall = new MovableBall(100, 100, 100);
+        MovableBall movableBall = new MovableBall(new Point(100, 100), 100);
 
         assertEquals(MovableBall.DEFALUT_DX, movableBall.getDX());
         assertEquals(MovableBall.DEFALUT_DY, movableBall.getDY());
@@ -21,7 +21,7 @@ class TestMovableBall {
 
     @RepeatedTest(100)
     void testSetDelta(RepetitionInfo info) {
-        MovableBall movableBall = new MovableBall(150, 150, 150);
+        MovableBall movableBall = new MovableBall(new Point(150, 150), 150);
 
         Random random = new Random();
 
@@ -43,7 +43,7 @@ class TestMovableBall {
         int dx = 10;
         int dy = 20;
 
-        MovableBall movableBall = new MovableBall(x, y, radius);
+        MovableBall movableBall = new MovableBall(new Point(x, y), radius);
         movableBall.setDX(dx);
         movableBall.setDY(dy);
 

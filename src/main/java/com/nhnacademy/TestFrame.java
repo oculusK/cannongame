@@ -28,7 +28,7 @@ public class TestFrame {
             int radius = 1 + random.nextInt(50);
             Color color = colors[random.nextInt(colors.length)];
 
-            PaintableBall ball = new PaintableBall(x, y, radius, color);
+            PaintableBall ball = new PaintableBall(new Point(x, y), radius, color);
             try {
                 world.add(ball);
                 System.out.println("X 좌표 : " + ball.getX() + ", Y좌표 : " + ball.getY() + ", 반지름 : " + ball.getRadius()

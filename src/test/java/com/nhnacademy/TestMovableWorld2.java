@@ -11,9 +11,9 @@ public class TestMovableWorld2 {
 
         frame.setSize(400, 300);
 
-        MovableWorld World = new MovableWorld();
-        World.setSize(400, 300);
-        frame.add(World);
+        MovableWorld world = new MovableWorld();
+        world.setSize(400, 300);
+        frame.add(world);
 
         Random random = new Random();
         for (int i = 0; i < 1; i++) {
@@ -21,18 +21,18 @@ public class TestMovableWorld2 {
             int x = radius + random.nextInt(400 - 2 * radius);
             int y = radius + random.nextInt(300 - 2 * radius);
 
-            BoundedBall boundedBall = new BoundedBall(x, y, radius, Color.GREEN);
+            BoundedBall boundedBall = new BoundedBall(new Point(x, y), radius, Color.GREEN);
             boundedBall.setDX(10);
             boundedBall.setDY(5);
-            World.add(boundedBall);
+            world.add(boundedBall);
         }
 
-        World.setMaxMoveCount(0);
-        World.setDT(100);
+        world.setMaxMoveCount(0);
+        world.setDT(100);
 
         frame.setEnabled(true);
         frame.setVisible(true);
 
-        World.run();
+        world.run();
     }
 }

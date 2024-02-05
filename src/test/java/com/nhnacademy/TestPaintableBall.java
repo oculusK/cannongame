@@ -7,7 +7,7 @@ import java.awt.Color;
 
 import org.junit.jupiter.api.Test;
 
-public class TestPaintableBall {
+class TestPaintableBall {
     @Test
     void testPaintableBallConstructor() {
         int x = 0;
@@ -15,7 +15,7 @@ public class TestPaintableBall {
         int radius = 10;
         Color color = Color.BLUE;
 
-        PaintableBall ball = new PaintableBall(x, y, radius, color);
+        PaintableBall ball = new PaintableBall(new Point(x, y), radius, color);
         assertEquals(color, ball.getColor());
     }
 
@@ -25,7 +25,7 @@ public class TestPaintableBall {
         int y = 100;
         int radius = 100;
 
-        PaintableBall ball = new PaintableBall(x, y, radius);
+        PaintableBall ball = new PaintableBall(new Point(x, y), radius);
         assertEquals(PaintableBall.DEFAULT_COLOR, ball.getColor());
     }
 
@@ -36,7 +36,7 @@ public class TestPaintableBall {
         int radius = 100;
 
         assertThrowsExactly(IllegalArgumentException.class, () -> {
-            new PaintableBall(x, y, radius, null);
+            new PaintableBall(new Point(x, y), radius, null);
         });
     }
 
@@ -49,7 +49,7 @@ public class TestPaintableBall {
         Color originalColor = Color.RED;
         Color color = Color.BLUE;
 
-        PaintableBall ball = new PaintableBall(x, y, radius, color);
+        PaintableBall ball = new PaintableBall(new Point(x, y), radius, color);
 
         g.setColor(originalColor);
         ball.paint(g);
