@@ -22,11 +22,6 @@ public class MovableBall extends PaintableBall {
     }
 
     public void move() {
-        getRegion().move(getMotion());
-    }
-
-    @Override
-    public void moveTo(Point location) {
-        getRegion().moveTo(location);
+        move(getMotion());
     }
 }

@@ -21,7 +21,6 @@ public class Ball extends Region {
             throw new IllegalArgumentException();
         }
 
-        region = new Region(location, radius * 2, radius * 2);
         this.logger = LogManager.getLogger(this.getClass());
     }
 
@@ -29,33 +28,20 @@ public class Ball extends Region {
         return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
 
-    @Override
-    public Point getLocation() {
-        return region.getLocation();
-    }
-
-    void setLocation(Point location) {
-        region.moveTo(location);
-    }
-
     public int getRadius() {
-        return (region.getWidth() / 2);
+        return (getWidth() / 2);
     }
 
-    public Region getRegion() {
-        return region;
-    }
-
-    public boolean isCollision(Ball other) {
-        return region.intersects(other.getRegion());
-    }
-
-    public boolean isCollision(Box other) {
-        return region.intersects(other.getRegion());
+    public boolean isCollision(Region other) {
+        return intersects(other);
     }
 
     public Logger getLogger() {

@@ -32,7 +32,7 @@ public class Main {
         world.setSize(WORLD_WIDTH, WORLD_HEIGHT);
         frame.add(world);
 
-        while (world.getBallCount() < BALL_COUNT) {
+        while (world.getCount() < BALL_COUNT) {
             int radius = MIN_RADIUS + random.nextInt(MAX_RADIUS - MIN_RADIUS + 1);
             int x = radius + random.nextInt(WORLD_WIDTH - 2 * radius);
             int y = radius + random.nextInt(WORLD_HEIGHT - 2 * radius);
@@ -40,7 +40,7 @@ public class Main {
             int dx = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
             int dy = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
 
-            String sequence = "00" + (world.getBallCount() + 1);
+            String sequence = "00" + (world.getCount() + 1);
             ball.setName("ball_" + sequence.substring(sequence.length() - 2));
             ball.setMotion(Motion.createPosition(dx, dy));
 
@@ -51,7 +51,7 @@ public class Main {
             }
         }
 
-        while (world.getBoxCount() < BOX_COUNT) {
+        while (world.getCount() < BALL_COUNT + BOX_COUNT) {
             int width = MIN_WIDTH + random.nextInt(MAX_WIDTH - MIN_WIDTH + 1);
             int height = MIN_HEIGHT + random.nextInt(MAX_HEIGHT - MIN_HEIGHT + 1);
             int x = width / 2 + random.nextInt(WORLD_WIDTH - width);
@@ -60,8 +60,8 @@ public class Main {
             int dx = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
             int dy = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
 
-            String sequence = "00" + (world.getBoxCount() + 1);
-            box.setName("ball_" + sequence.substring(sequence.length() - 2));
+            String sequence = "00" + (world.getCount() + 1);
+            box.setName("box_" + sequence.substring(sequence.length() - 2));
             box.setMotion(Motion.createPosition(dx, dy));
 
             try {

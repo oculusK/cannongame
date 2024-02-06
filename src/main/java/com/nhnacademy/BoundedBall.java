@@ -1,50 +1,41 @@
 package com.nhnacademy;
 
 import java.awt.Color;
-import java.awt.Rectangle;
 
 public class BoundedBall extends MovableBall {
-    Rectangle bounds;
+    Region bounds;
 
     public BoundedBall(Point location, int radius) {
         super(location, radius);
 
-        bounds = getRegion();
+        bounds = new Region(this);
     }
 
     public BoundedBall(Point location, int radius, Color color) {
         super(location, radius, color);
 
-        bounds = getRegion();
+        bounds = new Region(this);
     }
 
-    public Rectangle getBounds() {
+    public Region getBounds() {
         return bounds;
     }
 
-    public void setBounds(Rectangle bounds) {
+    public void setBounds(Region bounds) {
         this.bounds = bounds;
     }
 
     public boolean isOutOfBounds() {
-        return !getRegion().equals(bounds.intersection(getRegion()));
+        return equals(bounds.intersection(this));
     }
 
     public void bounce() {
-        if (getRegion().getMinX() < bounds.getMinX()) {
-            moveTo(new Point((int) (2 * bounds.getMinX() + getRadius() - getRegion().getMinX()), getLocation().getY()));
-            setDX(-getDX());
-        } else if (getRegion().getMaxX() > bounds.getMaxX()) {
-            moveTo(new Point((int) (2 * bounds.getMaxX() - getRadius() - getRegion().getMaxX()), getLocation().getY()));
-            setDX(-getDX());
+        if ((getMinX() < bounds.getMinX()) || (getMaxX() > bounds.getMaxX())) {
+            getMotion().turnDX();
         }
 
-        if (getRegion().getMinY() - getRadius() < bounds.getMinY()) {
-            moveTo(new Point(getLocation().getX(), (int) (2 * bounds.getMinY() + getRadius() - getRegion().getMinY())));
-            setDY(-getDY());
-        } else if (getRegion().getMaxY() + getRadius() > bounds.getMaxY()) {
-            moveTo(new Point(getLocation().getX(), (int) (2 * bounds.getMaxY() - getRadius() - getRegion().getMaxY())));
-            setDY(-getDY());
+        if ((getMinY() < bounds.getMinY()) || (getMaxY() > bounds.getMaxY())) {
+            getMotion().turnDY();
         }
     }
 

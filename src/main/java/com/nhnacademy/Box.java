@@ -22,7 +22,6 @@ public class Box extends Region {
             throw new IllegalArgumentException();
         }
 
-        region = new Region(location, width, height);
         logger = LogManager.getLogger(this.getClass());
     }
 
@@ -38,35 +37,8 @@ public class Box extends Region {
         this.name = name;
     }
 
-    @Override
-    public Point getLocation() {
-        return region.getLocation();
-    }
-
-    void setLocation(Point location) {
-        region.moveTo(location);
-    }
-
-    @Override
-    public int getWidth() {
-        return region.getWidth();
-    }
-
-    @Override
-    public int getHeight() {
-        return region.getHeight();
-    }
-
-    public Region getRegion() {
-        return region;
-    }
-
-    public boolean isCollision(Box other) {
-        return region.intersects(other.getRegion());
-    }
-
-    public boolean isCollision(Ball other) {
-        return region.intersects(other.getRegion());
+    public boolean isCollision(Region other) {
+        return intersects(other);
     }
 
     public Logger getLogger() {

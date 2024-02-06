@@ -18,18 +18,11 @@ public class MovableWorld extends World {
     }
 
     public void move() {
-        for (int i = 0; i < getBallCount(); i++) {
-            Ball ball = getBall(i);
-
-            if (ball instanceof MovableBall) {
-                ((MovableBall) ball).move();
-            }
-        }
-        for (int i = 0; i < getBoxCount(); i++) {
-            Box box = getBox(i);
-
-            if (box instanceof MovableBox) {
-                ((MovableBox) box).move();
+        for (int i = 0; i < getCount(); i++) {
+            if (get(i) instanceof MovableBall) {
+                ((MovableBall) get(i)).move();
+            } else if (get(i) instanceof MovableBox) {
+                ((MovableBox) get(i)).move();
             }
         }
 

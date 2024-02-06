@@ -13,6 +13,12 @@ public class Region {
         this.height = height;
     }
 
+    public Region(Region other) {
+        this.location = new Point(other.getLocation());
+        this.width = other.getWidth();
+        this.height = other.getHeight();
+    }
+
     public Point getLocation() {
         return location;
     }
@@ -45,7 +51,7 @@ public class Region {
         location.move(motion);
     }
 
-    public void moveTo(Point location) {
+    protected void moveTo(Point location) {
         this.location.moveTo(location);
     }
 

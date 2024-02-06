@@ -22,10 +22,6 @@ public class MovableBox extends PaintableBox {
     }
 
     public void move() {
-        getRegion().move(getMotion());
-    }
-
-    public void moveTo(Point location) {
-        getRegion().moveTo(location);
+        move(getMotion());
     }
 }
