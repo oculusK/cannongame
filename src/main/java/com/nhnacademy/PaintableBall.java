@@ -3,7 +3,7 @@ package com.nhnacademy;
 import java.awt.Color;
 import java.awt.Graphics;
 
-public class PaintableBall extends Ball {
+public class PaintableBall extends Ball implements Paintable {
     public static final Color DEFAULT_COLOR = Color.BLACK;
     Color color;
 

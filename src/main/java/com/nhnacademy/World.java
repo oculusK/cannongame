@@ -59,11 +59,9 @@ public class World extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        for (Regionable region : regionList) {
-            if (region instanceof PaintableBall) {
-                ((PaintableBall) region).paint(g);
-            } else if (region instanceof PaintableBox) {
-                ((PaintableBox) region).paint(g);
+        for (Regionable object : regionList) {
+            if (object instanceof Paintable) {
+                ((Paintable) object).paint(g);
             }
         }
 

@@ -19,10 +19,8 @@ public class MovableWorld extends World {
 
     public void move() {
         for (int i = 0; i < getCount(); i++) {
-            if (get(i) instanceof MovableBall) {
-                ((MovableBall) get(i)).move();
-            } else if (get(i) instanceof MovableBox) {
-                ((MovableBox) get(i)).move();
+            if (get(i) instanceof Movable) {
+                ((Movable) get(i)).move();
             }
         }
 

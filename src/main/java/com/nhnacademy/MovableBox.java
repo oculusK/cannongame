@@ -2,7 +2,7 @@ package com.nhnacademy;
 
 import java.awt.Color;
 
-public class MovableBox extends PaintableBox {
+public class MovableBox extends PaintableBox implements Movable {
     Motion motion = Motion.createPosition(0, 0);
 
     public MovableBox(Point location, int width, int height) {

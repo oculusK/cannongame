@@ -2,7 +2,7 @@ package com.nhnacademy;
 
 import java.awt.Color;
 
-public class MovableBall extends PaintableBall {
+public class MovableBall extends PaintableBall implements Movable {
     Motion motion = Motion.createPosition(0, 0);
 
     public MovableBall(Point location, int radius) {

@@ -1,5 +1,6 @@
 package com.nhnacademy;
 
+import java.awt.Color;
 import java.util.Random;
 
 import javax.swing.JFrame;
@@ -36,7 +37,7 @@ public class Main {
             int radius = MIN_RADIUS + random.nextInt(MAX_RADIUS - MIN_RADIUS + 1);
             int x = radius + random.nextInt(WORLD_WIDTH - 2 * radius);
             int y = radius + random.nextInt(WORLD_HEIGHT - 2 * radius);
-            MovableBall ball = new MovableBall(new Point(x, y), radius);
+            MovableBall ball = new MovableBall(new Point(x, y), radius, Color.GREEN);
             int dx = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
             int dy = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
 
@@ -56,7 +57,7 @@ public class Main {
             int height = MIN_HEIGHT + random.nextInt(MAX_HEIGHT - MIN_HEIGHT + 1);
             int x = width / 2 + random.nextInt(WORLD_WIDTH - width);
             int y = height / 2 + random.nextInt(WORLD_HEIGHT - height);
-            MovableBox box = new MovableBox(new Point(x, y), width, height);
+            MovableBox box = new MovableBox(new Point(x, y), width, height, Color.pink);
             int dx = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
             int dy = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
 
