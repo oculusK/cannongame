@@ -2,7 +2,7 @@ package com.nhnacademy;
 
 import java.awt.Rectangle;
 
-public class Region {
+public class Region implements Regionable {
     Point location;
     int width;
     int height;
@@ -51,18 +51,18 @@ public class Region {
         location.move(motion);
     }
 
-    protected void moveTo(Point location) {
+    public void moveTo(Point location) {
         this.location.moveTo(location);
     }
 
-    public boolean intersects(Region other) {
+    public boolean intersects(Regionable other) {
         Rectangle rect1 = new Rectangle(getMinX(), getMinY(), getWidth(), getHeight());
         Rectangle rect2 = new Rectangle(other.getMinX(), other.getMinY(), other.getWidth(), other.getHeight());
 
         return rect1.intersects(rect2);
     }
 
-    public Region intersection(Region other) {
+    public Regionable intersection(Regionable other) {
         Rectangle rect1 = new Rectangle(getMinX(), getMinY(), getWidth(), getHeight());
         Rectangle rect2 = new Rectangle(other.getMinX(), other.getMinY(), other.getWidth(), other.getHeight());
 

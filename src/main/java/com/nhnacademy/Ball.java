@@ -21,6 +21,7 @@ public class Ball extends Region {
             throw new IllegalArgumentException();
         }
 
+        region = new Region(location, 2 * radius, 2 * radius);
         this.logger = LogManager.getLogger(this.getClass());
     }
 

@@ -1,7 +1,7 @@
 package com.nhnacademy;
 
 public class BoundedWorld extends MovableWorld {
-    public boolean outOfBounds(Region region) {
+    public boolean outOfBounds(Regionable region) {
         return (region.getMinX() < getBounds().getMinX())
                 || (region.getMaxX() > getBounds().getMaxX())
                 || (region.getMinY() < getBounds().getMinY())
@@ -67,8 +67,8 @@ public class BoundedWorld extends MovableWorld {
                     if ((get(j) instanceof Ball) && (ball1 != get(j))) {
                         Ball ball2 = (Ball) get(j);
 
-                        if (ball1.isCollision(ball2)) {
-                            Region intersection = ball1.intersection(ball2);
+                        if (ball1.intersects(ball2)) {
+                            Regionable intersection = ball1.intersection(ball2);
 
                             if ((intersection.getWidth() != ball1.getWidth()) &&
                                     (intersection.getWidth() != ball2.getWidth())) {
@@ -87,8 +87,8 @@ public class BoundedWorld extends MovableWorld {
                     if (get(j) instanceof Box) {
                         Box box = (Box) get(j);
 
-                        if (ball1.isCollision(box)) {
-                            Region intersection = ball1.intersection(box);
+                        if (ball1.intersects(box)) {
+                            Regionable intersection = ball1.intersection(box);
 
                             if ((intersection.getWidth() != ball1.getWidth()) &&
                                     (intersection.getWidth() != box.getWidth())) {
@@ -120,8 +120,8 @@ public class BoundedWorld extends MovableWorld {
                     if ((box1 != get(j)) && (get(j) instanceof Box)) {
                         Box box2 = (Box) get(j);
 
-                        if (box1.isCollision(box2)) {
-                            Region intersection = box1.intersection(box2);
+                        if (box1.intersects(box2)) {
+                            Regionable intersection = box1.intersection(box2);
 
                             if ((intersection.getWidth() != box1.getWidth()) &&
                                     (intersection.getWidth() != box2.getWidth())) {
@@ -140,8 +140,8 @@ public class BoundedWorld extends MovableWorld {
                     if (get(j) instanceof Ball) {
                         Ball ball = (Ball) get(j);
 
-                        if (box1.isCollision(ball)) {
-                            Region intersection = box1.intersection(ball);
+                        if (box1.intersects(ball)) {
+                            Regionable intersection = box1.intersection(ball);
 
                             if ((intersection.getWidth() != box1.getWidth()) &&
                                     (intersection.getWidth() != ball.getWidth())) {

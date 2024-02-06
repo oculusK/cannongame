@@ -11,19 +11,15 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class World extends JPanel {
-    List<Region> regionList = new LinkedList<>();
+    List<Regionable> regionList = new LinkedList<>();
     Logger logger = LogManager.getLogger();
 
     public World() {
         super();
     }
 
-    public void add(Region newRegion) {
-        if (!(newRegion instanceof Region)) {
-            throw new IllegalArgumentException();
-        }
-
-        for (Region region : regionList) {
+    public void add(Regionable newRegion) {
+        for (Regionable region : regionList) {
             if (region.intersects(newRegion)) {
                 throw new IllegalArgumentException();
             }
@@ -52,7 +48,7 @@ public class World extends JPanel {
         regionList.remove(index);
     }
 
-    public Region get(int index) {
+    public Regionable get(int index) {
         return regionList.get(index);
     }
 
@@ -63,7 +59,7 @@ public class World extends JPanel {
     @Override
     public void paint(Graphics g) {
         super.paint(g);
-        for (Region region : regionList) {
+        for (Regionable region : regionList) {
             if (region instanceof PaintableBall) {
                 ((PaintableBall) region).paint(g);
             } else if (region instanceof PaintableBox) {
@@ -74,14 +70,14 @@ public class World extends JPanel {
         Color previousColor = g.getColor();
         g.setColor(Color.RED);
         for (int i = 0; i < getCount(); i++) {
-            Region region1 = get(i);
+            Regionable region1 = get(i);
 
             if (region1 != null) {
                 for (int j = i + 1; j < getCount(); j++) {
-                    Region region2 = get(j);
+                    Regionable region2 = get(j);
 
                     if (region1.intersects(region2)) {
-                        Region collisionArea = region1.intersection(region2);
+                        Regionable collisionArea = region1.intersection(region2);
 
                         g.drawRect(collisionArea.getMinX(), collisionArea.getMinY(),
                                 collisionArea.getWidth(), collisionArea.getHeight());

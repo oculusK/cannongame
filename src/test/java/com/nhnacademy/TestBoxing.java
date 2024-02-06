@@ -8,12 +8,10 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.stream.Stream;
-
 class TestBoxing {
     @ParameterizedTest
     @MethodSource("boxConstructionProvider")
-    public void testBoxConstructor(int x, int y, int width, int height) {
+    void testBoxConstructor(int x, int y, int width, int height) {
         Box box = new Box(new Point(x, y), width, height);
 
         assertEquals(x, (int) box.getLocation().getX());
