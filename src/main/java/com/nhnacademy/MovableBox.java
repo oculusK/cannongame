@@ -3,7 +3,7 @@ package com.nhnacademy;
 import java.awt.Color;
 
 public class MovableBox extends PaintableBox {
-    Motion motion = new Motion(getDX(), getDY());
+    Motion motion = Motion.createPosition(0, 0);
 
     public MovableBox(Point location, int width, int height) {
         super(location, width, height);
@@ -13,30 +13,19 @@ public class MovableBox extends PaintableBox {
         super(location, width, height, color);
     }
 
-    public int getDX() {
-        return motion.dx;
+    public Motion getMotion() {
+        return motion;
     }
 
-    public int getDY() {
-        return motion.dy;
-    }
-
-    public void setDX(int dx) {
-        motion.dx = dx;
-    }
-
-    public void setDY(int dy) {
-        motion.dy = dy;
+    public void setMotion(Motion motion) {
+        this.motion = motion;
     }
 
     public void move() {
-        Point newLocation = new Point(getLocation());
-        newLocation.translate(getDX(), getDY());
-
-        setLocation(newLocation);
+        getRegion().move(getMotion());
     }
 
     public void moveTo(Point location) {
-        setLocation(location);
+        getRegion().moveTo(location);
     }
 }

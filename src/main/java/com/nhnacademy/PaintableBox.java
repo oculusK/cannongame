@@ -27,10 +27,8 @@ public class PaintableBox extends Box {
         }
 
         Color previousColor = g.getColor();
-
-        g.setColor(previousColor);
-        g.fillOval((int) getRegion().getX(), (int) getRegion().getY(),
-                (int) getRegion().getWidth(), (int) getRegion().getHeight());
+        g.setColor(getColor());
+        g.fillRect(getRegion().getMinX(), getRegion().getMinY(), getRegion().getWidth(), getRegion().getWidth());
         g.setColor(previousColor);
     }
 }

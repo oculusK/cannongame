@@ -1,49 +1,75 @@
 package com.nhnacademy;
 
-import java.awt.Rectangle;
+import java.util.UUID;
 
-// import org.apache.logging.log4j.LogManager;
-// import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-public class Box {
-    Rectangle region;
-    // Logger logger;
+public class Box extends Region {
+    String id = UUID.randomUUID().toString();
+    String name = id;
+    Region region;
+    Logger logger;
 
     public Box(Point location, int width, int height) {
-        if ((width <= 0 || height <= 0)
-                || ((location.getX() >= 0) && ((Integer.MAX_VALUE - location.getX()) < width))
-                || ((location.getX() < 0) && ((location.getX() - Integer.MIN_VALUE) < width))
-                || ((location.getY() >= 0) && ((Integer.MAX_VALUE - location.getY()) < height))
-                || ((location.getY() < 0) && ((location.getY() - Integer.MIN_VALUE) < height))) {
+        super(location, width, height);
+
+        if ((width <= 0) || (height <= 0)
+                || ((location.getX() - width / 2.0) > location.getX())
+                || ((location.getX() + width / 2.0) < location.getX())
+                || ((location.getY() - height / 2.0) > location.getY())
+                || ((location.getY() + height / 2.0) < location.getY())) {
             throw new IllegalArgumentException();
         }
 
-        region = new Rectangle(location.getX() - width / 2, location.getY() - height
-                / 2, width, height);
-        // this.logger = LogManager.getLogger(this.getClass());
+        region = new Region(location, width, height);
+        logger = LogManager.getLogger(this.getClass());
     }
 
-    Point getLocation() {
-        return new Point(((int) getRegion().getCenterX()), ((int) getRegion().getCenterY()));
+    public String getId() {
+        return id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public Point getLocation() {
+        return region.getLocation();
+    }
+
+    void setLocation(Point location) {
+        region.moveTo(location);
+    }
+
+    @Override
     public int getWidth() {
-        return (int) getRegion().getWidth();
+        return region.getWidth();
     }
 
+    @Override
     public int getHeight() {
-        return (int) getRegion().getHeight();
+        return region.getHeight();
     }
 
-    Rectangle getRegion() {
+    public Region getRegion() {
         return region;
     }
 
     public boolean isCollision(Box other) {
-        return getRegion().intersects(other.getRegion());
+        return region.intersects(other.getRegion());
     }
 
-    public boolean isCollision(Ball ball) {
-        return getRegion().intersects(ball.getRegion());
+    public boolean isCollision(Ball other) {
+        return region.intersects(other.getRegion());
+    }
+
+    public Logger getLogger() {
+        return logger;
     }
 }

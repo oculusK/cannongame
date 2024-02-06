@@ -1,27 +1,27 @@
 package com.nhnacademy;
 
-import java.awt.Rectangle;
 import java.util.UUID;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class Ball {
+public class Ball extends Region {
     String id = UUID.randomUUID().toString();
     String name = id;
-    Rectangle region;
+    Region region;
     Logger logger;
 
     public Ball(Point location, int radius) {
+        super(location, 2 * radius, 2 * radius);
         if ((radius <= 0)
-                || ((location.getX() >= 0) && ((Integer.MAX_VALUE - location.getX()) < radius))
-                || ((location.getX() < 0) && ((location.getX() - Integer.MIN_VALUE) < radius))
-                || ((location.getY() >= 0) && ((Integer.MAX_VALUE - location.getY()) < radius))
-                || ((location.getY() < 0) && ((location.getY() - Integer.MIN_VALUE) < radius))) {
+                || ((location.getX() - radius) > location.getX())
+                || ((location.getX() + radius) < location.getX())
+                || ((location.getY() - radius) > location.getY())
+                || ((location.getY() + radius) < location.getY())) {
             throw new IllegalArgumentException();
         }
 
-        region = new Rectangle(location.getX() - radius, location.getY() - radius, radius * 2, radius * 2);
+        region = new Region(location, radius * 2, radius * 2);
         this.logger = LogManager.getLogger(this.getClass());
     }
 
@@ -29,33 +29,33 @@ public class Ball {
         return id;
     }
 
-    public String getName() {
-        return name;
-    }
-
     public void setName(String name) {
         this.name = name;
     }
 
+    @Override
     public Point getLocation() {
-        return new Point((int) region.getCenterX(), (int) region.getCenterY());
+        return region.getLocation();
     }
 
     void setLocation(Point location) {
-        region.translate(location.getX() - getLocation().getX(), location.getY() - getLocation().getY());
+        region.moveTo(location);
     }
 
     public int getRadius() {
-        return (int) (region.getWidth() / 2);
+        return (region.getWidth() / 2);
     }
 
-    public Rectangle getRegion() {
-        return new Rectangle(getLocation().getX() - getRadius(), getLocation().getY() - getRadius(),
-                2 * getRadius(), 2 * getRadius());
+    public Region getRegion() {
+        return region;
     }
 
     public boolean isCollision(Ball other) {
-        return Point.distance(getLocation(), other.getLocation()) - (getRadius() + other.getRadius()) < 0;
+        return region.intersects(other.getRegion());
+    }
+
+    public boolean isCollision(Box other) {
+        return region.intersects(other.getRegion());
     }
 
     public Logger getLogger() {

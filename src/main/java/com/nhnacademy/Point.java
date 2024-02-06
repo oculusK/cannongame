@@ -10,37 +10,38 @@ public class Point {
     }
 
     public Point(Point other) {
-        moveTo(other);
+        x = other.getX();
+        y = other.getY();
     }
 
     public int getX() {
         return x;
     }
 
+    void setX(int x) {
+        this.x = x;
+    }
+
     public int getY() {
         return y;
     }
 
-    public void set(int x, int y) {
-        this.x = x;
+    void setY(int y) {
         this.y = y;
     }
 
-    public void set(Point other) {
-        x = other.getX();
-        y = other.getY();
-    }
-
-    public void translate(int dx, int dy) {
-        moveTo(getX() + dx, getY() + dy);
+    public void move(Motion motion) {
+        moveTo(getX() + motion.getDX(), getY() + motion.getDY());
     }
 
     public void moveTo(int x, int y) {
-        set(x, y);
+        setX(x);
+        setY(y);
     }
 
     public void moveTo(Point other) {
-        set(other);
+        setX(other.getX());
+        setY(other.getY());
     }
 
     public static int distance(Point point1, Point point2) {
@@ -51,10 +52,5 @@ public class Point {
     @Override
     public String toString() {
         return "[" + x + ", " + y + "]";
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return (other instanceof Point) && (getX() == ((Point) other).getX()) && (getY() == ((Point) other).getY());
     }
 }

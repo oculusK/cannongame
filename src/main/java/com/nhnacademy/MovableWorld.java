@@ -17,20 +17,15 @@ public class MovableWorld extends World {
         moveCount = 0;
     }
 
-    public void moveBall() {
-        for (int i = 0; i < getCountBall(); i++) {
+    public void move() {
+        for (int i = 0; i < getBallCount(); i++) {
             Ball ball = getBall(i);
 
             if (ball instanceof MovableBall) {
                 ((MovableBall) ball).move();
             }
         }
-
-        repaint();
-    }
-
-    public void moveBox() {
-        for (int i = 0; i < getCountBox(); i++) {
+        for (int i = 0; i < getBoxCount(); i++) {
             Box box = getBox(i);
 
             if (box instanceof MovableBox) {
@@ -47,7 +42,7 @@ public class MovableWorld extends World {
 
         logger.trace("start");
         while ((maxMoveCount == 0) || (moveCount < maxMoveCount)) {
-            moveBall();
+            move();
             moveCount++;
             if (dt != 0) {
                 try {
@@ -65,7 +60,6 @@ public class MovableWorld extends World {
                 nextMoveTime = System.currentTimeMillis();
             }
         }
-        logger.trace("finished : " + (System.currentTimeMillis() - startTime));
     }
 
     public int getMoveCount() {

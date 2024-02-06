@@ -5,23 +5,24 @@ import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 public class Main {
     public static void main(String[] args) {
         final int MIN_RADIUS = 10;
         final int MAX_RADIUS = 50;
+        final int MIN_WIDTH = 10;
+        final int MAX_WIDTH = 50;
+        final int MIN_HEIGHT = 10;
+        final int MAX_HEIGHT = 50;
         final int MIN_DELTA = 10;
         final int MAX_DELTA = 30;
         final int WORLD_WIDTH = 400;
         final int WORLD_HEIGHT = 300;
-        final int BALL_COUNT = 2;
+        final int BALL_COUNT = 1;
+        final int BOX_COUNT = 1;
         final int MAX_MOVE_COUNT = 0;
         final int DELTA_TIME = 100;
 
         Random random = new Random();
-        Logger logger = LogManager.getLogger("main");
 
         JFrame frame = new JFrame();
         frame.setSize(WORLD_WIDTH, WORLD_HEIGHT);
@@ -31,7 +32,7 @@ public class Main {
         world.setSize(WORLD_WIDTH, WORLD_HEIGHT);
         frame.add(world);
 
-        while (world.getCount() < BALL_COUNT) {
+        while (world.getBallCount() < BALL_COUNT) {
             int radius = MIN_RADIUS + random.nextInt(MAX_RADIUS - MIN_RADIUS + 1);
             int x = radius + random.nextInt(WORLD_WIDTH - 2 * radius);
             int y = radius + random.nextInt(WORLD_HEIGHT - 2 * radius);
@@ -39,16 +40,34 @@ public class Main {
             int dx = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
             int dy = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
 
-            String sequence = "00" + (world.getCount() + 1);
+            String sequence = "00" + (world.getBallCount() + 1);
             ball.setName("ball_" + sequence.substring(sequence.length() - 2));
-            ball.setDX(dx);
-            ball.setDY(dy);
+            ball.setMotion(Motion.createPosition(dx, dy));
 
             try {
                 world.add(ball);
-            } catch (IllegalArgumentException e) {
-                logger.warn("요청하신 위치[{},{}]에 다른 볼이 있어 등록이 불가능합니다.",
-                        x, y);
+            } catch (IllegalArgumentException ignore) {
+                //
+            }
+        }
+
+        while (world.getBoxCount() < BOX_COUNT) {
+            int width = MIN_WIDTH + random.nextInt(MAX_WIDTH - MIN_WIDTH + 1);
+            int height = MIN_HEIGHT + random.nextInt(MAX_HEIGHT - MIN_HEIGHT + 1);
+            int x = width / 2 + random.nextInt(WORLD_WIDTH - width);
+            int y = height / 2 + random.nextInt(WORLD_HEIGHT - height);
+            MovableBox box = new MovableBox(new Point(x, y), width, height);
+            int dx = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
+            int dy = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
+
+            String sequence = "00" + (world.getBoxCount() + 1);
+            box.setName("ball_" + sequence.substring(sequence.length() - 2));
+            box.setMotion(Motion.createPosition(dx, dy));
+
+            try {
+                world.add(box);
+            } catch (IllegalArgumentException ignore) {
+                //
             }
         }
 
