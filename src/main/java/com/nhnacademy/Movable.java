@@ -8,4 +8,6 @@ public interface Movable extends Regionable {
     public void move();
 
     public void moveTo(Point location);
+
+    public void addEffect(Motion effect);
 }

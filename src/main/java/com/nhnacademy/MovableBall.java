@@ -24,4 +24,8 @@ public class MovableBall extends PaintableBall implements Movable {
     public void move() {
         move(getMotion());
     }
+
+    public void addEffect(Motion effect) {
+        motion.add(effect);
+    }
 }

@@ -24,4 +24,8 @@ public class MovableTriangle extends PaintableTriangle {
     public void move() {
         move(getMotion());
     }
+
+    public void addEffect(Motion effect) {
+        motion.add(effect);
+    }
 }

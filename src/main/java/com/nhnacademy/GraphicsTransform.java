@@ -12,11 +12,44 @@ import java.text.AttributedCharacterIterator;
 
 public class GraphicsTransform extends Graphics {
     Graphics g;
-    Region region;
+    int baseX = 0;
+    int baseY = 0;
+    int width = 0;
+    int height = 0;
+    float scale = 1.0f;
 
-    public GraphicsTransform(Graphics g, int width, int height) {
+    public void setGraphics(Graphics g) {
         this.g = g;
-        this.region = new Region(new Point(width / 2, height / 2), width, height);
+    }
+
+    public void setBase(int x, int y) {
+        baseX = x;
+        baseY = y;
+    }
+
+    public void setSize(int width, int height) {
+        this.width = width;
+        this.height = height;
+    }
+
+    public void setScale(float scale) {
+        this.scale = scale;
+    }
+
+    int scaleWidth(int x) {
+        return (int) (x * scale);
+    }
+
+    int scaleHeight(int y) {
+        return (int) (y * scale);
+    }
+
+    int transformX(int x) {
+        return scaleWidth(baseX + x);
+    }
+
+    int transformY(int y) {
+        return scaleHeight(height - (baseY + y));
     }
 
     @Override
@@ -26,7 +59,7 @@ public class GraphicsTransform extends Graphics {
 
     @Override
     public void translate(int x, int y) {
-        g.translate(x, y);
+        g.translate(transformX(x), transformY(y));
     }
 
     @Override
@@ -71,12 +104,12 @@ public class GraphicsTransform extends Graphics {
 
     @Override
     public void clipRect(int x, int y, int width, int height) {
-        g.clipRect(x, y, width, height);
+        g.clipRect(transformX(x), transformY(y), scaleWidth(width), scaleHeight(height));
     }
 
     @Override
     public void setClip(int x, int y, int width, int height) {
-        g.setClip(x, y, width, height);
+        g.setClip(transformX(x), transformY(y), scaleWidth(width), scaleHeight(height));
     }
 
     @Override
@@ -100,9 +133,15 @@ public class GraphicsTransform extends Graphics {
     }
 
     @Override
+    public void drawRect(int x, int y, int width, int height) {
+        g.drawRect(transformX(x), transformY(y + height), scaleWidth(width), scaleHeight(height));
+    }
+
+    @Override
     public void fillRect(int x, int y, int width, int height) {
-        int newY = region.getHeight() - y - height;
-        g.fillRect(x, newY, width, height);
+        int[] xPoints = { x, x + width, x + width, x };
+        int[] yPoints = { y, y, y + height, y + height };
+        fillPolygon(xPoints, yPoints, xPoints.length);
     }
 
     @Override
@@ -112,7 +151,8 @@ public class GraphicsTransform extends Graphics {
 
     @Override
     public void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight) {
-        g.drawRoundRect(x, y, width, height, arcWidth, arcHeight);
+        g.drawRoundRect(transformX(x), transformY(y + height),
+                scaleWidth(width), scaleHeight(height), scaleWidth(arcWidth), scaleHeight(arcHeight));
     }
 
     @Override
@@ -122,14 +162,12 @@ public class GraphicsTransform extends Graphics {
 
     @Override
     public void drawOval(int x, int y, int width, int height) {
-        int newY = region.getHeight() - (y + height);
-        g.drawOval(x, newY, width, height);
+        g.drawOval(transformX(x), transformY(y), width, height);
     }
 
     @Override
     public void fillOval(int x, int y, int width, int height) {
-        int newY = region.getHeight() - (y + height);
-        g.fillOval(x, newY, width, height);
+        g.fillOval(transformX(x), transformY(y + height), scaleWidth(width), scaleHeight(height));
     }
 
     @Override
@@ -149,22 +187,32 @@ public class GraphicsTransform extends Graphics {
 
     @Override
     public void drawPolygon(int[] xPoints, int[] yPoints, int nPoints) {
+        int[] newXPoints = new int[xPoints.length];
         int[] newYPoints = new int[yPoints.length];
 
-        for (int i = 0; i < yPoints.length; i++) {
-            newYPoints[i] = region.getHeight() - yPoints[i];
+        for (int i = 0; i < xPoints.length; i++) {
+            newXPoints[i] = transformX(xPoints[i]);
         }
-        g.drawPolygon(xPoints, newYPoints, nPoints);
+
+        for (int i = 0; i < yPoints.length; i++) {
+            newYPoints[i] = transformY(yPoints[i]);
+        }
+        g.drawPolygon(newXPoints, newYPoints, nPoints);
     }
 
     @Override
     public void fillPolygon(int[] xPoints, int[] yPoints, int nPoints) {
+        int[] newXPoints = new int[xPoints.length];
         int[] newYPoints = new int[yPoints.length];
 
-        for (int i = 0; i < yPoints.length; i++) {
-            newYPoints[i] = region.getHeight() - yPoints[i];
+        for (int i = 0; i < xPoints.length; i++) {
+            newXPoints[i] = transformX(xPoints[i]);
         }
-        g.fillPolygon(xPoints, newYPoints, nPoints);
+
+        for (int i = 0; i < yPoints.length; i++) {
+            newYPoints[i] = transformY(yPoints[i]);
+        }
+        g.fillPolygon(newXPoints, newYPoints, nPoints);
     }
 
     @Override

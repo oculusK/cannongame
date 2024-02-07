@@ -1,9 +1,13 @@
 package com.nhnacademy;
 
+import java.util.LinkedList;
+import java.util.List;
+
 public class MovableWorld extends World {
     int moveCount = 0;
     int maxMoveCount = 0;
     int dt = 0;
+    List<Motion> effectList = new LinkedList<>();
 
     public void setDT(int dt) {
         this.dt = dt;
@@ -20,7 +24,12 @@ public class MovableWorld extends World {
     public void move() {
         for (int i = 0; i < getCount(); i++) {
             if (get(i) instanceof Movable) {
-                ((Movable) get(i)).move();
+                Movable object = ((Movable) get(i));
+                Motion testMotion = new Motion(0, -3);
+
+                object.addEffect(testMotion);
+
+                object.move();
             }
         }
 
@@ -63,5 +72,21 @@ public class MovableWorld extends World {
 
     public void setMaxMoveCount(int maxMoveCount) {
         this.maxMoveCount = maxMoveCount;
+    }
+
+    public void addEffect(Motion effect) {
+        if (effect == null) {
+            throw new IllegalArgumentException();
+        }
+
+        effectList.add(effect);
+    }
+
+    public int getEffectCount() {
+        return effectList.size();
+    }
+
+    public void removeEffect(Motion effect) {
+        effectList.remove(effect);
     }
 }
