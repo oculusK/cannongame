@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 
 public class PaintableTriangle extends Triangle implements Paintable {
-    public static final Color DEFAULT_COLOR = Color.BLACK;
+    public static final Color DEFAULT_COLOR = Color.GREEN;
     Color color;
 
     public PaintableTriangle(Point location, int width, int height, Color color) {
@@ -25,9 +25,12 @@ public class PaintableTriangle extends Triangle implements Paintable {
             throw new IllegalArgumentException();
         }
 
+        int[] xs = { getLocation().getX(), getMinX(), getMaxX() };
+        int[] ys = { getMaxY(), getMinY(), getMinY() };
+
         Color previousColor = g.getColor();
         g.setColor(getColor());
-        g.fillRect(getMinX());
+        g.fillPolygon(xs, ys, 3);
         g.setColor(previousColor);
     }
 
