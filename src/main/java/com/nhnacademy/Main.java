@@ -7,23 +7,10 @@ import javax.swing.WindowConstants;
 
 public class Main {
     public static void main(String[] args) {
-        final int MIN_RADIUS = 10;
-        final int MAX_RADIUS = 50;
-        final int MIN_WIDTH = 10;
-        final int MAX_WIDTH = 50;
-        final int MIN_HEIGHT = 10;
-        final int MAX_HEIGHT = 50;
-        final int MIN_DELTA = 3;
-        final int MAX_DELTA = 10;
         final int WORLD_WIDTH = 400;
         final int WORLD_HEIGHT = 300;
-        final int BALL_COUNT = 1;
-        final int BOX_COUNT = 1;
-        final int TRIANGLE_COUNT = 1;
         final int MAX_MOVE_COUNT = 0;
         final int DELTA_TIME = 10;
-
-        Random random = new Random();
 
         JFrame frame = new JFrame();
         frame.setSize(WORLD_WIDTH, WORLD_HEIGHT);
@@ -33,64 +20,18 @@ public class Main {
         world.setSize(WORLD_WIDTH, WORLD_HEIGHT);
         frame.add(world);
 
-        while (world.getCount() < BALL_COUNT) {
-            int radius = MIN_RADIUS + random.nextInt(MAX_RADIUS - MIN_RADIUS + 1);
-            int x = radius + random.nextInt(WORLD_WIDTH - 2 * radius);
-            int y = radius + random.nextInt(WORLD_HEIGHT - 2 * radius);
-            MovableBall ball = new MovableBall(new Point(x, y), radius);
-            int dx = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
-            int dy = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
+        int x1 = 50;
+        int y1 = 25;
+        int width1 = 100;
+        int height1 = 50;
 
-            String sequence = "00" + (world.getCount() + 1);
-            ball.setName("ball_" + sequence.substring(sequence.length() - 2));
-            ball.setMotion(Motion.createPosition(dx, dy));
+        world.add(new PaintableBox(new Point(x1, y1), width1, height1, Color.RED));
 
-            try {
-                world.add(ball);
-            } catch (IllegalArgumentException ignore) {
-                //
-            }
-        }
-
-        while (world.getCount() < BALL_COUNT + BOX_COUNT) {
-            int width = MIN_WIDTH + random.nextInt(MAX_WIDTH - MIN_WIDTH + 1);
-            int height = MIN_HEIGHT + random.nextInt(MAX_HEIGHT - MIN_HEIGHT + 1);
-            int x = width / 2 + random.nextInt(WORLD_WIDTH - width);
-            int y = height / 2 + random.nextInt(WORLD_HEIGHT - height);
-            MovableBox box = new MovableBox(new Point(x, y), width, height);
-            int dx = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
-            int dy = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
-
-            String sequence = "00" + (world.getCount() + 1);
-            box.setName("box_" + sequence.substring(sequence.length() - 2));
-            box.setMotion(Motion.createPosition(dx, dy));
-
-            try {
-                world.add(box);
-            } catch (IllegalArgumentException ignore) {
-                //
-            }
-        }
-
-        while (world.getCount() < BALL_COUNT + BOX_COUNT + TRIANGLE_COUNT) {
-            int width = MIN_WIDTH + random.nextInt(MAX_WIDTH - MIN_WIDTH + 1);
-            int height = MIN_HEIGHT + random.nextInt(MAX_HEIGHT - MIN_HEIGHT + 1);
-            int x = width / 2 + random.nextInt(WORLD_WIDTH - width);
-            int y = height / 2 + random.nextInt(WORLD_HEIGHT - height);
-            MovableTriangle triangle = new MovableTriangle(new Point(x, y), width, height);
-            int dx = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
-            int dy = MIN_DELTA + random.nextInt(MAX_DELTA - MIN_DELTA + 1);
-
-            String sequence = "00" + (world.getCount() + 1);
-            triangle.setName("triangle_" + sequence.substring(sequence.length() - 2));
-            triangle.setMotion(Motion.createPosition(dx, dy));
-
-            try {
-                world.add(triangle);
-            } catch (IllegalArgumentException ignore) {
-                //
-            }
-        }
+        int x2 = 50;
+        int y2 = 275;
+        int width2 = 100;
+        int height2 = 50;
+        world.add(new PaintableBox(new Point(x2, y2), width2, height2, Color.BLUE));
 
         frame.setVisible(true);
         frame.setEnabled(true);
