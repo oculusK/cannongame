@@ -1,7 +1,6 @@
 package com.nhnacademy;
 
-import java.util.Random;
-
+import java.awt.Color;
 import javax.swing.JFrame;
 import javax.swing.WindowConstants;
 
