@@ -23,7 +23,7 @@ public class Main {
         final int BOX_COUNT = 1;
         final int TRIANGLE_COUNT = 1;
         final int MAX_MOVE_COUNT = 0;
-        final int DELTA_TIME = 10;
+        final int DELTA_TIME = 100;
 
         Random random = new Random();
 
