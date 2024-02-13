@@ -30,6 +30,11 @@ public class Point {
         this.y = y;
     }
 
+    public void translate(int dx, int dy) {
+        x += dx;
+        y += dy;
+    }
+
     public void move(Motion motion) {
         moveTo(getX() + motion.getDX(), getY() + motion.getDY());
     }
@@ -50,7 +55,20 @@ public class Point {
     }
 
     @Override
+    public boolean equals(Object other) {
+        return (other instanceof Point)
+                && (hashCode() == other.hashCode())
+                && (getX() == ((Point) other).getX())
+                && (getY() == ((Point) other).getY());
+    }
+
+    @Override
+    public int hashCode() {
+        return getX() + getY();
+    }
+
+    @Override
     public String toString() {
-        return "[" + x + ", " + y + "]";
+        return "(" + getX() + ", " + getY() + ")";
     }
 }
